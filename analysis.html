@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PathFinder Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto Condensed', sans-serif;
+      background: linear-gradient(180deg, #a48ec5, #c89cd0, rgb(94, 50, 128));
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .container {
+      max-width: 400px;
+      background: rgb(225, 224, 222);
+      padding: 2rem;
+      text-align: center;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #4f46e5;
+    }
+
+    .answers, .insight {
+      margin-top: 1.5rem;
+    }
+
+    .answers ul, .insight ul {
+      padding-left: 20px;
+      text-align: left;
+    }
+
+    .back-button {
+      margin-top: 2rem;
+      display: block;
+      text-align: center;
+    }
+
+    .back-button a {
+      text-decoration: none;
+      color: white;
+      background: #4f46e5;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .back-button a:hover {
+      background-color: #4338ca;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Career Analysis</h1>
+    <div id="suggestion"></div>
+    <div class="back-button">
+      <a href="index.html">← Take Quiz Again</a>
+    </div>
+  </div>
+
+  <script>
+    const match = JSON.parse(sessionStorage.getItem("match"));
+    const answers = JSON.parse(sessionStorage.getItem("answers"));
+
+    const suggestionBox = document.getElementById("suggestion");
+    const answerList = document.getElementById("answerList");
+    const insightList = document.getElementById("insightList");
+
+    if (match && answers) {
+      suggestionBox.innerHTML = `<h2>Suggested Course: ${match.course}</h2><h3>Career Path: ${match.career}</h3>`;
+      
+      answers.forEach((answer, index) => {
+        answerList.innerHTML += `<li>Q${index + 1}: <strong>${answer}</strong></li>`;
+      });
+
+      match.answers.forEach((matchAns, index) => {
+        if (matchAns === answers[index]) {
+          insightList.innerHTML += `<li>Answer to Q${index + 1} aligned well with this course.</li>`;
+        }
+      });
+    } else {
+      suggestionBox.innerHTML = "<p>No match found. Please try again from the quiz page.</p>";
+    }
+  </script>
+</body>
+</html>
